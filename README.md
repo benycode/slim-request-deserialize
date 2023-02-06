@@ -19,7 +19,7 @@ Requires Slim 4.
 
 ## Usage
 
-create entity class:
+create an entity class:
 
 ```php
 declare(strict_types=1);
