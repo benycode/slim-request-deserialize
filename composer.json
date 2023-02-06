@@ -1,0 +1,22 @@
+{
+    "name": "benycode/slim-request-deserialize",
+    "description": "Deserialize slim4 requests with the Symfony Serializer",
+    "keywords": ["Slim 4","request","middleware","Symfony", "Serializer"],
+    "type": "library",
+    "authors": [
+        {
+            "name": "Benycode"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BenyCode\\Slim\\RequestDeserialize": "src"
+        }
+    },
+	"config": {
+        "preferred-install": "dist"
+    }
+}
