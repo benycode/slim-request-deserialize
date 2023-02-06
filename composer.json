@@ -1,6 +1,6 @@
 {
     "name": "benycode/slim-request-deserialize",
-    "description": "Deserialize slim4 requests with the Symfony Serializer",
+    "description": "Deserialize slim 4 requests with the Symfony Serializer",
     "keywords": ["Slim 4","request","middleware","Symfony", "Serializer"],
     "type": "library",
     "authors": [
