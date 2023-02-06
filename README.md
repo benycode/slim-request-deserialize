@@ -24,7 +24,7 @@ create an entity class:
 ```php
 declare(strict_types=1);
 
-namespace App\Domain\Client\Data;
+namespace App;
 
 final class LoginResult
 {
