@@ -67,7 +67,7 @@ final class RequestDeserializeMiddleware implements MiddlewareInterface
 			);
 
         $request = $request
-            ->withAttribute('request_data', $deserializedData);
+            ->withAttribute('request-data', $deserializedData);
 
         return $handler
             ->handle($request);
