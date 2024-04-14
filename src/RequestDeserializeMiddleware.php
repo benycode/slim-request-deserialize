@@ -72,7 +72,7 @@ final class RequestDeserializeMiddleware implements MiddlewareInterface
 
         $params = \array_merge($arguments, (array) $params, $queryParams);
 
-        $paramsString = \json_encode($array);
+        $paramsString = \json_encode($params);
 
         $deserializedData = $this
             ->serializer
