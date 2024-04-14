@@ -57,7 +57,7 @@ final class RequestDeserializeMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($this->parsedBody) {
-            $requestBodyString = \json_encode($request->getParsedBody());
+            $requestBodyString = (string) \json_encode($request->getParsedBody());
         } else {
             $requestBodyString = (string) $request->getBody();
         }
