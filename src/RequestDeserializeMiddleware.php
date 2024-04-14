@@ -19,6 +19,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Slim\Routing\RouteContext;
 
 final class RequestDeserializeMiddleware implements MiddlewareInterface
 {
@@ -27,7 +28,6 @@ final class RequestDeserializeMiddleware implements MiddlewareInterface
     public function __construct(
         private string $entity,
         private string $contentType,
-        private bool $parsedBody = false,
     ) {
         $encoders = [
             new JsonEncoder(),
@@ -56,22 +56,35 @@ final class RequestDeserializeMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($this->parsedBody) {
-            $requestBodyString = (string) \json_encode($request->getParsedBody());
-        } else {
-            $requestBodyString = (string) $request->getBody();
+        $params = $request->getParsedBody();
+
+        $routeContext = RouteContext::fromRequest($request);
+        
+        $route = $routeContext->getRoute();
+        
+        $arguments = [];
+        $queryParams = [];
+        
+        if ((bool) $route) {
+            $arguments = $route->getArguments();
+            $queryParams = $request->getQueryParams();
         }
+
+        $params = \array_merge($arguments, (array) $params, $queryParams);
+
+        $paramsString = \json_encode($array);
 
         $deserializedData = $this
             ->serializer
             ->deserialize(
-                $requestBodyString,
+                $paramsString,
                 $this->entity,
                 $this->contentType,
             );
 
         $request = $request
-            ->withAttribute('request-data', $deserializedData);
+            ->withAttribute('request-data', $deserializedData)
+        ;
 
         return $handler
             ->handle($request);
